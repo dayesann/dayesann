@@ -1,0 +1,102 @@
+/* ========== Aura Desk v1.0.0 ========== */
+/* base.css — 变量、重置、基础样式 */
+
+:root {
+    --sky-top: #9fc7df;
+    --sky-bottom: #eaf4f4;
+    --cloud-white: rgba(255, 255, 255, 0.58);
+    --morandi-red: #D28A82;
+    --text-main: #263845;
+    --text-muted: #61737f;
+    --glass-bg: rgba(255, 255, 255, 0.34);
+    --glass-border: rgba(255, 255, 255, 0.52);
+    --glass-shadow: 0 18px 70px 0 rgba(42, 68, 82, 0.08);
+    --ease-spring: cubic-bezier(0.25, 0.8, 0.25, 1);
+    --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-breathe: ease-in-out;
+    --theme-accent: #95B48D;
+    --custom-blur: 0px;
+}
+
+body[data-theme="sakura"] {
+    --sky-top: #f2cbd0; --sky-bottom: #f8eee9;
+    --cloud-white: rgba(255, 255, 255, 0.46);
+    --text-main: #473a3a; --text-muted: #826f6b;
+    --glass-bg: rgba(255, 255, 255, 0.32);
+    --glass-shadow: 0 18px 70px 0 rgba(118, 78, 82, 0.09);
+    --theme-accent: #d98290; --morandi-red: #D28A82;
+}
+
+body[data-theme="firefly"] {
+    --sky-top: #07131a; --sky-bottom: #112931;
+    --cloud-white: rgba(194, 221, 224, 0.04);
+    --text-main: #E8EEE8; --text-muted: #A6B1AD;
+    --glass-bg: rgba(14, 30, 36, 0.34);
+    --glass-border: rgba(225, 244, 236, 0.12);
+    --glass-shadow: 0 20px 80px 0 rgba(0, 0, 0, 0.34);
+    --theme-accent: #d7e98b; --morandi-red: #C44536;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+    background:linear-gradient(135deg,var(--sky-top) 0%,var(--sky-bottom) 100%);
+    color:var(--text-main); min-height:100vh;
+    display:flex; justify-content:center; align-items:center;
+    overflow:hidden; position:relative;
+    -webkit-font-smoothing:antialiased;
+    transition:background 1.5s var(--ease-spring), color 1.5s var(--ease-spring);
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+    background:
+        radial-gradient(circle at 50% 22%, rgba(255,255,255,0.28), transparent 34%),
+        radial-gradient(circle at 8% 12%, rgba(255,255,255,0.18), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(33,57,66,0.08));
+    mix-blend-mode:soft-light;
+}
+
+body[data-theme="firefly"]::after{
+    background:
+        radial-gradient(circle at 70% 16%, rgba(238,241,199,0.14), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.28));
+    mix-blend-mode:screen;
+}
+
+/* 自定义背景层 */
+#custom-bg-layer{
+    position:fixed;inset:-40px;z-index:0;
+    background-size:cover;background-position:center;
+    transform:scale(1.08);
+    filter:blur(var(--custom-blur));
+    opacity:0;pointer-events:none;
+    transition:opacity 1.2s var(--ease-spring), filter 0.3s;
+}
+body[data-custom="true"] #custom-bg-layer{opacity:1;}
+body[data-custom="true"] .parallax-scene{opacity:0;pointer-events:none;}
+
+/* Bento 网格 */
+.dashboard{position:relative;z-index:10;width:100%;max-width:960px;padding:24px;display:grid;grid-template-columns:repeat(12,1fr);gap:24px;}
+.glass-card{
+    background:var(--glass-bg);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+    border:1px solid var(--glass-border);border-radius:36px;box-shadow:var(--glass-shadow);
+    padding:48px;display:flex;flex-direction:column;justify-content:center;
+    transition:transform 0.4s var(--ease-spring),box-shadow 0.4s var(--ease-spring),background 0.4s;
+}
+.glass-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.06);}
+.card-label{font-size:0.95rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+
+/* SVG 图标基础 */
+.icon{width:16px;height:16px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.icon-filled{fill:currentColor;stroke:none;}
+
+/* 按钮 */
+.btn{background:var(--text-main);color:var(--sky-bottom);border:none;padding:14px 32px;border-radius:50px;font-size:1rem;font-weight:500;cursor:pointer;transition:all 0.3s var(--ease-spring);width:max-content;font-family:inherit;}
+.btn:hover{transform:scale(1.03);box-shadow:0 8px 20px rgba(0,0,0,0.1);}
+.btn.is-active-state{background:rgba(255,255,255,0.7);color:var(--text-main);}
