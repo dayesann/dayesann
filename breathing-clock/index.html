@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aura Desk | 呼吸时钟</title>
+<meta name="version" content="1.0.0">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/ambient.css">
+<link rel="stylesheet" href="css/parallax.css">
+<link rel="stylesheet" href="css/clock.css">
+<link rel="stylesheet" href="css/meditation.css">
+<link rel="stylesheet" href="css/drawer.css">
+<link rel="stylesheet" href="css/calendar.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div id="custom-bg-layer"></div>
+
+<div class="ambient-bg">
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+</div>
+
+<div class="parallax-scene" id="parallax-scene">
+    <div class="parallax-layer parallax-far" data-speed="0.03" data-theme="leaf"></div>
+    <div class="parallax-layer parallax-mid" data-speed="0.06" data-theme="leaf"></div>
+    <div class="parallax-layer parallax-near" data-speed="0.15" data-theme="leaf"></div>
+
+    <div class="parallax-layer parallax-far" data-speed="0.03" data-theme="sakura" style="display:none;"></div>
+    <div class="parallax-layer parallax-mid" data-speed="0.06" data-theme="sakura" style="display:none;"></div>
+    <div class="parallax-layer parallax-near" data-speed="0.15" data-theme="sakura" style="display:none;"></div>
+
+    <div class="parallax-layer parallax-far" data-speed="0.03" data-theme="firefly" style="display:none;"></div>
+    <div class="parallax-layer parallax-mid" data-speed="0.06" data-theme="firefly" style="display:none;"></div>
+    <div class="parallax-layer parallax-near" data-speed="0.15" data-theme="firefly" style="display:none;"></div>
+</div>
+
+<div id="particles-container"></div>
+
+<div class="wardrobe" id="wardrobe">
+    <button class="wardrobe-trigger" id="wardrobe-trigger" aria-label="切换皮肤">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3h8l-1.5 3 4.5 3v12H5V9l4.5-3z"></path>
+            <path d="M9 9h6"></path>
+            <path d="M12 3v2"></path>
+        </svg>
+    </button>
+</div>
+
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<div class="skin-drawer" id="skin-drawer">
+    <div class="drawer-header">
+        <div class="drawer-title">选择场景</div>
+        <button class="drawer-close" id="drawer-close" aria-label="关闭">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <div class="skin-section-title">预设场景</div>
+
+    <div class="skin-card" data-theme="leaf">
+        <div class="skin-thumb"></div>
+        <div class="skin-info">
+            <div class="skin-name">清风树叶</div>
+            <div class="skin-desc">雾化远景 · 午后微风</div>
+        </div>
+        <div class="skin-check2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"></polyline></svg>
+        </div>
+    </div>
+
+    <div class="skin-card" data-theme="sakura">
+        <div class="skin-thumb"></div>
+        <div class="skin-info">
+            <div class="skin-name">春日樱花</div>
+            <div class="skin-desc">柔粉光场 · 轻雾枝影</div>
+        </div>
+        <div class="skin-check2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"></polyline></svg>
+        </div>
+    </div>
+
+    <div class="skin-card" data-theme="firefly">
+        <div class="skin-thumb"></div>
+        <div class="skin-info">
+            <div class="skin-name">仲夏萤火</div>
+            <div class="skin-desc">月下微光 · 静谧夜色</div>
+        </div>
+        <div class="skin-check2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"></polyline></svg>
+        </div>
+    </div>
+
+    <div class="drawer-divider"></div>
+
+    <div class="custom-bg-section">
+        <div class="skin-section-title">个性化背景</div>
+        <button class="upload-btn" id="upload-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            上传自定义背景
+        </button>
+        <input type="file" id="bg-file-input" accept="image/*">
+
+        <div class="blur-control">
+            <label>模糊</label>
+            <input type="range" class="blur-slider" id="blur-slider" min="0" max="50" value="0">
+            <span class="blur-value" id="blur-value">0px</span>
+        </div>
+
+        <button class="remove-bg-btn" id="remove-bg-btn">移除自定义背景</button>
+    </div>
+</div>
+
+<div class="dashboard">
+    <div class="glass-card clock-widget">
+        <div class="card-label" style="justify-content:center;margin-bottom:40px;">
+            <svg class="sync-breathe" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 12 24C12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z"></path>
+            </svg>
+            LOCAL TIME
+        </div>
+        <div class="time-wrapper" style="justify-content:center;">
+            <div class="flip-unit" data-unit="hours"><div class="flip-container"><div class="flip-top"><span class="digit-text">00</span></div><div class="flip-bottom"><span class="digit-text">00</span></div></div></div>
+            <div class="time-dots"><div class="time-dot"></div><div class="time-dot"></div></div>
+            <div class="flip-unit" data-unit="minutes"><div class="flip-container"><div class="flip-top"><span class="digit-text">00</span></div><div class="flip-bottom"><span class="digit-text">00</span></div></div></div>
+            <div class="time-dots"><div class="time-dot"></div><div class="time-dot"></div></div>
+            <div class="flip-unit" data-unit="seconds"><div class="flip-container"><div class="flip-top accent-bg"><span class="digit-text accent-text">00</span></div><div class="flip-bottom accent-bg"><span class="digit-text accent-text">00</span></div></div></div>
+        </div>
+    </div>
+
+    <div class="glass-card pomodoro-widget" id="pomo-card">
+        <div class="pomo-header">
+            <button class="settings-btn" id="duration-trigger" aria-label="自定义时长">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </button>
+            <div class="card-label"><svg class="icon" viewBox="0 0 24 24"><path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14z"></path><path d="M5 19c3-3 6-5 10-7"></path></svg>MINDFUL BREATHE</div>
+            <div class="duration-menu" id="duration-menu">
+                <div class="duration-presets" id="duration-presets">
+                    <button class="duration-preset" data-min="1">1 分</button>
+                    <button class="duration-preset active" data-min="3">3 分</button>
+                    <button class="duration-preset" data-min="5">5 分</button>
+                    <button class="duration-preset" data-min="10">10 分</button>
+                </div>
+                <div class="duration-custom">
+                    <input type="number" id="duration-input" min="1" max="120" placeholder="自定义">
+                    <button id="duration-apply">确定</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="breathe-visualizer" id="breathe-visual">
+            <div class="petal" style="--r:0deg;"></div>
+            <div class="petal" style="--r:60deg;"></div>
+            <div class="petal" style="--r:120deg;"></div>
+            <div class="petal" style="--r:180deg;"></div>
+            <div class="petal" style="--r:240deg;"></div>
+            <div class="petal" style="--r:300deg;"></div>
+            <div class="breathe-guide" id="breathe-guide" data-state="idle">3 分钟</div>
+        </div>
+        <div class="pomo-time" id="pomo-display">03:00</div>
+        <button class="btn" id="pomo-btn">开始冥想</button>
+    </div>
+
+    <div class="glass-card calendar-widget">
+        <div class="cal-header">
+            <div class="cal-month" id="cal-month">月</div>
+            <div class="cal-lunar" id="cal-lunar">农历</div>
+        </div>
+        <div class="cal-grid" id="cal-grid-container">
+            <div class="cal-weekday">一</div><div class="cal-weekday">二</div><div class="cal-weekday">三</div><div class="cal-weekday">四</div><div class="cal-weekday">五</div><div class="cal-weekday">六</div><div class="cal-weekday">日</div>
+        </div>
+    </div>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/parallax.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/drawer.js"></script>
+<script src="js/customBg.js"></script>
+<script src="js/clock.js"></script>
+<script src="js/meditation.js"></script>
+<script src="js/calendar.js"></script>
+<script>
+initParallax();
+initDrawer(switchTheme);
+initCustomBg();
+initClock();
+initMeditation();
+renderCalendar();
+
+switchTheme(appSettings.theme || 'leaf');
+if(appSettings.customBg){
+    applyCustomBg(appSettings.customBg, appSettings.blur || 0);
+}
+</script>
+</body>
+</html>
