@@ -1,0 +1,11 @@
+/* calendar.css — 日历组件 */
+
+.calendar-widget{grid-column:span 6;padding:48px 40px;justify-content:flex-start;}
+.cal-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px;padding:0 8px;}
+.cal-month{font-size:1.6rem;font-weight:600;color:var(--text-main);letter-spacing:1px;}
+.cal-lunar{font-size:0.95rem;color:var(--text-muted);font-weight:500;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);row-gap:16px;column-gap:8px;text-align:center;}
+.cal-weekday{font-size:0.8rem;font-weight:600;color:var(--text-muted);margin-bottom:8px;}
+.cal-day{font-size:0.95rem;font-weight:500;color:var(--text-main);aspect-ratio:1;display:flex;justify-content:center;align-items:center;border-radius:50%;transition:all 0.3s;}
+.cal-day.empty{background:transparent;}
+.cal-day.today{background-color:var(--morandi-red);color:#fff;box-shadow:0 6px 16px rgba(210,138,130,0.4);font-weight:600;transform:scale(1.05);}
