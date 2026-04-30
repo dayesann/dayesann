@@ -1,0 +1,117 @@
+/* meditation.css — 冥想模块与呼吸动画 */
+
+.pomodoro-widget{grid-column:span 6;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;}
+.pomo-header{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-bottom:auto;position:relative;}
+.pomo-header .card-label{margin-bottom:0;}
+.settings-btn{
+    background:rgba(255,255,255,0.3);border:1px solid var(--glass-border);
+    width:32px;height:32px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;color:var(--text-muted);
+    transition:all 0.3s var(--ease-spring);
+    backdrop-filter:blur(8px);
+}
+.settings-btn:hover{color:var(--text-main);transform:rotate(45deg);background:rgba(255,255,255,0.5);}
+.settings-btn svg{width:14px;height:14px;}
+
+/* 时长选择弹窗 */
+.duration-menu{
+    position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-10px);
+    background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+    border:1px solid var(--glass-border);border-radius:20px;
+    padding:16px;min-width:240px;
+    box-shadow:0 16px 40px rgba(0,0,0,0.12);
+    opacity:0;visibility:hidden;pointer-events:none;
+    transition:all 0.3s var(--ease-spring);
+    z-index:50;
+}
+.duration-menu.open{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+.duration-menu::before{
+    content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);
+    width:12px;height:12px;background:var(--glass-bg);border-left:1px solid var(--glass-border);border-top:1px solid var(--glass-border);
+}
+.duration-presets{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+.duration-preset{
+    background:rgba(255,255,255,0.25);border:1px solid transparent;border-radius:10px;
+    padding:10px 6px;font-size:0.85rem;font-weight:600;color:var(--text-main);
+    cursor:pointer;transition:all 0.25s var(--ease-spring);
+    font-family:inherit;
+}
+.duration-preset:hover{background:rgba(255,255,255,0.45);}
+.duration-preset.active{background:var(--theme-accent);color:#fff;border-color:var(--theme-accent);box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+body[data-theme="firefly"] .duration-preset.active{color:var(--text-main);}
+.duration-custom{display:flex;gap:6px;align-items:center;}
+.duration-custom input{
+    flex:1;background:rgba(255,255,255,0.25);border:1px solid var(--glass-border);border-radius:10px;
+    padding:10px 12px;font-size:0.85rem;color:var(--text-main);
+    font-family:inherit;outline:none;transition:all 0.25s;
+}
+.duration-custom input:focus{background:rgba(255,255,255,0.5);border-color:var(--theme-accent);}
+.duration-custom input::placeholder{color:var(--text-muted);}
+.duration-custom button{
+    background:var(--text-main);color:var(--sky-bottom);border:none;
+    padding:10px 14px;border-radius:10px;font-size:0.8rem;font-weight:500;
+    cursor:pointer;transition:all 0.25s;font-family:inherit;
+}
+.duration-custom button:hover{opacity:0.85;}
+
+.breathe-visualizer{position:relative;width:140px;height:140px;margin:20px auto 20px;display:flex;justify-content:center;align-items:center;}
+.petal{
+    position:absolute;width:70px;height:70px;border-radius:50%;
+    background:var(--theme-accent);opacity:0.4;transform-origin:center center;
+    transform:rotate(var(--r)) translateY(-10px) scale(0.4);
+    transition:background 1.5s,transform 0.5s var(--ease-spring);
+}
+.breathe-guide{
+    position:absolute;z-index:10;font-size:1.1rem;font-weight:600;
+    color:var(--text-main);letter-spacing:2px;text-align:center;
+    transition:transform 2s ease-in-out,opacity 2s ease-in-out;
+    text-shadow:0 0 10px rgba(255,255,255,0.8);
+    transform:scale(1);opacity:0.8;
+}
+body[data-theme="firefly"] .breathe-guide{text-shadow:0 0 10px rgba(0,0,0,0.8);}
+.breathe-guide[data-state="inhale"]{transform:scale(1.15);opacity:1;}
+.breathe-guide[data-state="exhale"]{transform:scale(0.85);opacity:0.6;}
+.breathe-guide[data-state="idle"]{transform:scale(1);opacity:0.8;}
+
+.is-focusing::before{
+    content:'';position:absolute;inset:0;border-radius:36px;
+    background:var(--theme-accent);filter:blur(40px);z-index:-1;
+    animation:aura-glow 8s ease-in-out infinite;
+}
+@keyframes aura-glow{0%,100%{opacity:0;}50%{opacity:0.4;}}
+.is-focusing .petal{animation:breathe-bloom 8s ease-in-out infinite;}
+@keyframes breathe-bloom{
+    0%,100%{transform:rotate(var(--r)) translateY(-10px) scale(0.4);opacity:0.3;}
+    50%{transform:rotate(var(--r)) translateY(-45px) scale(1.1);opacity:0.7;}
+}
+
+.pomo-time{font-size:2.2rem;font-weight:300;font-variant-numeric:tabular-nums;margin-bottom:24px;letter-spacing:1px;color:var(--text-muted);}
+
+/* 冥想完成提示（卡片内） */
+.meditation-toast{
+    position:absolute;inset:0;z-index:20;
+    display:flex;justify-content:center;align-items:center;
+    pointer-events:none;
+}
+.meditation-toast-inner{
+    background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+    border:1px solid var(--glass-border);border-radius:20px;
+    padding:16px 36px;box-shadow:0 16px 40px rgba(0,0,0,0.12);
+    font-size:1.3rem;font-weight:600;color:var(--text-main);
+    letter-spacing:2px;text-align:center;
+    opacity:0;transform:scale(0.9);
+    animation:toast-in 0.4s var(--ease-spring) forwards;
+    pointer-events:auto;
+}
+@keyframes toast-in{
+    0%{opacity:0;transform:scale(0.9);}
+    100%{opacity:1;transform:scale(1);}
+}
+@keyframes toast-out{
+    0%{opacity:1;transform:scale(1);}
+    100%{opacity:0;transform:scale(0.9);}
+}
+.meditation-toast-inner.leaving{
+    animation:toast-out 0.35s var(--ease-spring) forwards;
+}
