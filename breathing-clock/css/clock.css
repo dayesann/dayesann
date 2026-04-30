@@ -1,0 +1,28 @@
+/* clock.css — 翻页时钟 */
+
+.clock-widget{grid-column:span 12;align-items:center;padding:48px;}
+.time-wrapper{display:flex;align-items:center;gap:20px;}
+.flip-unit{display:flex;flex-direction:column;align-items:center;}
+.flip-container{perspective:600px;width:140px;height:140px;position:relative;border-radius:16px;box-shadow:0 10px 20px rgba(0,0,0,0.05),inset 0 2px 4px rgba(255,255,255,0.4);}
+.flip-top,.flip-bottom,.flip-top-anim,.flip-bottom-anim{height:50%;width:100%;position:absolute;left:0;overflow:hidden;backface-visibility:hidden;display:flex;justify-content:center;background:var(--glass-bg);backdrop-filter:blur(16px);color:var(--text-main);}
+.flip-top,.flip-top-anim{top:0;align-items:flex-end;transform-origin:bottom;border-top-left-radius:16px;border-top-right-radius:16px;border-bottom:1px solid rgba(0,0,0,0.05);}
+.flip-bottom,.flip-bottom-anim{bottom:0;align-items:flex-start;transform-origin:top;border-bottom-left-radius:16px;border-bottom-right-radius:16px;}
+.accent-bg{background:rgba(255,255,255,0.4) !important;border-color:var(--theme-accent) !important;}
+body[data-theme="firefly"] .accent-bg{background:rgba(255,255,255,0.1) !important;}
+.accent-text{color:var(--theme-accent) !important;text-shadow:0 0 10px rgba(255,255,255,0.4);transition:color 1s;}
+.digit-text{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;font-size:5.5rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-2px;}
+.flip-top .digit-text,.flip-top-anim .digit-text{transform:translateY(50%);}
+.flip-bottom .digit-text,.flip-bottom-anim .digit-text{transform:translateY(-50%);}
+.flip-top-anim{z-index:2;transform:rotateX(0deg);}
+.flip-bottom-anim{z-index:1;transform:rotateX(90deg);}
+.flipping .flip-top-anim{animation:flipTop 0.5s cubic-bezier(0.45,0,0.55,1) forwards;}
+.flipping .flip-bottom-anim{animation:flipBottom 0.5s cubic-bezier(0.45,0,0.55,1) 0.25s forwards;}
+.flipping .flip-top-anim::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.1));animation:flipFadeOut 0.5s ease-in forwards;}
+@keyframes flipTop{0%{transform:rotateX(0deg);}100%{transform:rotateX(-90deg);}}
+@keyframes flipBottom{0%{transform:rotateX(90deg);}100%{transform:rotateX(0deg);}}
+@keyframes flipFadeOut{0%{opacity:1;}100%{opacity:0;}}
+
+.time-dots{display:flex;flex-direction:column;justify-content:center;gap:16px;height:140px;}
+.time-dot{width:8px;height:8px;background:var(--text-main);border-radius:50%;opacity:0.3;animation:colon-breathe 4s infinite ease-in-out;}
+@keyframes colon-breathe{0%,100%{opacity:0.5;transform:scale(1);}50%{opacity:0.1;transform:scale(0.8);}}
+.sync-breathe{animation:colon-breathe 4s infinite ease-in-out;color:var(--theme-accent);transition:color 1.5s var(--ease-spring);}
