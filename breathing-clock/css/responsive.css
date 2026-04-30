@@ -1,0 +1,15 @@
+/* responsive.css — 响应式适配 */
+
+@media (max-width:900px){
+    .clock-widget,.pomodoro-widget,.calendar-widget{grid-column:span 12;padding:32px;}
+    .time-wrapper{gap:10px;}
+    .flip-container{width:90px;height:90px;}
+    .digit-text{font-size:3.4rem;letter-spacing:-1px;}
+    .time-dots{height:90px;gap:10px;}
+    .time-dot{width:6px;height:6px;}
+    .pomo-time{font-size:2rem;}
+    .wardrobe{top:16px;right:16px;}
+    .wardrobe-trigger{width:44px;height:44px;}
+    .wardrobe-trigger svg{width:18px;height:18px;}
+    .skin-drawer{width:100%;}
+}
