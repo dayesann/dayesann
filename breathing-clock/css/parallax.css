@@ -1,0 +1,180 @@
+/* parallax.css — 三层景深视差场景 */
+
+.parallax-scene{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;overflow:hidden;pointer-events:none;transition:opacity 1s var(--ease-spring);}
+.parallax-layer{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;will-change:transform;}
+.parallax-far{z-index:1;}
+.parallax-mid{z-index:2;}
+.parallax-near{z-index:3;}
+.parallax-layer svg{display:none;}
+.parallax-layer::before,.parallax-layer::after{
+    content:"";
+    position:absolute;
+    inset:-6%;
+    pointer-events:none;
+    transition:opacity 1s var(--ease-spring), filter 1s var(--ease-spring);
+}
+
+.parallax-far svg{animation:drift-far 60s linear infinite alternate;}
+.parallax-mid svg{animation:drift-mid 40s linear infinite alternate;}
+@keyframes drift-far{0%{transform:translateX(0);}100%{transform:translateX(-20px);}}
+@keyframes drift-mid{0%{transform:translateX(0);}100%{transform:translateX(-15px);}}
+
+/* Repainted scenes: atmospheric, non-cartoon layers that replace the old inline SVG art. */
+.parallax-layer[data-theme="leaf"].parallax-far::before{
+    background:
+        radial-gradient(circle at 74% 18%, rgba(255,246,213,0.62) 0 4.8%, rgba(255,229,175,0.20) 5% 14%, transparent 23%),
+        radial-gradient(ellipse at 28% 35%, rgba(255,255,255,0.36), transparent 32%),
+        linear-gradient(180deg, rgba(255,255,255,0.22), transparent 54%);
+}
+.parallax-layer[data-theme="leaf"].parallax-far::after{
+    top:36%;
+    background:
+        radial-gradient(70% 38% at 22% 88%, rgba(99,128,118,0.22) 0 42%, transparent 43%),
+        radial-gradient(78% 42% at 76% 86%, rgba(86,116,101,0.20) 0 44%, transparent 45%),
+        linear-gradient(180deg, transparent 48%, rgba(172,196,179,0.18) 70%, rgba(95,127,111,0.16));
+    filter:blur(10px);
+}
+.parallax-layer[data-theme="leaf"].parallax-mid::before{
+    background:
+        radial-gradient(80% 28% at 10% 92%, rgba(69,105,88,0.22) 0 48%, transparent 49%),
+        radial-gradient(92% 34% at 68% 91%, rgba(81,124,100,0.24) 0 44%, transparent 45%),
+        linear-gradient(180deg, transparent 54%, rgba(255,255,255,0.15) 59%, transparent 69%);
+    filter:blur(6px);
+}
+.parallax-layer[data-theme="leaf"].parallax-mid::after{
+    background:
+        linear-gradient(105deg, transparent 0 55%, rgba(255,255,255,0.16) 58%, transparent 63%),
+        linear-gradient(180deg, transparent 62%, rgba(79,116,94,0.16));
+}
+.parallax-layer[data-theme="leaf"].parallax-near::before{
+    background:
+        radial-gradient(34% 28% at 4% 102%, rgba(30,67,50,0.42) 0 48%, transparent 49%),
+        radial-gradient(40% 30% at 102% 104%, rgba(25,62,47,0.38) 0 50%, transparent 51%),
+        radial-gradient(35% 20% at 56% 106%, rgba(48,91,68,0.25) 0 48%, transparent 49%);
+    filter:blur(3px);
+}
+.parallax-layer[data-theme="leaf"].parallax-near::after{
+    background:linear-gradient(180deg, transparent 68%, rgba(39,72,58,0.25));
+}
+
+.parallax-layer[data-theme="sakura"].parallax-far::before{
+    background:
+        radial-gradient(circle at 20% 16%, rgba(255,246,240,0.56) 0 4.4%, rgba(255,222,218,0.23) 5% 14%, transparent 23%),
+        radial-gradient(ellipse at 66% 28%, rgba(255,255,255,0.28), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.15), transparent 56%);
+}
+.parallax-layer[data-theme="sakura"].parallax-far::after{
+    top:34%;
+    background:
+        radial-gradient(80% 34% at 24% 92%, rgba(205,151,145,0.20) 0 45%, transparent 46%),
+        radial-gradient(88% 38% at 78% 90%, rgba(186,130,128,0.18) 0 45%, transparent 46%),
+        linear-gradient(180deg, transparent 54%, rgba(255,230,224,0.20) 65%, rgba(199,144,139,0.14));
+    filter:blur(10px);
+}
+.parallax-layer[data-theme="sakura"].parallax-mid::before{
+    background:
+        radial-gradient(70% 30% at 12% 92%, rgba(172,111,111,0.22) 0 46%, transparent 47%),
+        radial-gradient(86% 34% at 72% 94%, rgba(202,139,143,0.24) 0 45%, transparent 46%),
+        radial-gradient(circle at 62% 34%, rgba(255,225,226,0.18) 0 1px, transparent 2px),
+        radial-gradient(circle at 42% 20%, rgba(255,245,243,0.18) 0 1px, transparent 2px);
+    background-size:auto, auto, 130px 130px, 190px 190px;
+    filter:blur(6px);
+}
+.parallax-layer[data-theme="sakura"].parallax-mid::after{
+    opacity:0.45;
+    background:
+        linear-gradient(112deg, transparent 0 61%, rgba(120,78,76,0.16) 61.5% 62%, transparent 62.6%),
+        linear-gradient(118deg, transparent 0 68%, rgba(120,78,76,0.12) 68.4% 68.8%, transparent 69.3%);
+    filter:blur(0.5px);
+}
+.parallax-layer[data-theme="sakura"].parallax-near::before{
+    background:
+        radial-gradient(34% 26% at 0% 103%, rgba(136,86,84,0.32) 0 48%, transparent 49%),
+        radial-gradient(40% 30% at 103% 104%, rgba(124,76,78,0.28) 0 50%, transparent 51%),
+        radial-gradient(34% 20% at 56% 107%, rgba(192,124,129,0.22) 0 48%, transparent 49%);
+    filter:blur(3px);
+}
+.parallax-layer[data-theme="sakura"].parallax-near::after{
+    background:linear-gradient(180deg, transparent 70%, rgba(140,84,86,0.20));
+}
+
+.parallax-layer[data-theme="firefly"].parallax-far::before{
+    background:
+        radial-gradient(circle at 74% 18%, rgba(255,250,217,0.74) 0 3.8%, rgba(229,226,170,0.20) 4% 12%, transparent 22%),
+        radial-gradient(circle at 28% 20%, rgba(231,244,226,0.45) 0 1px, transparent 1.7px),
+        radial-gradient(circle at 44% 12%, rgba(231,244,226,0.34) 0 1px, transparent 1.7px),
+        radial-gradient(circle at 58% 25%, rgba(231,244,226,0.40) 0 1px, transparent 1.7px),
+        linear-gradient(180deg, rgba(18,45,55,0.10), transparent 62%);
+    background-size:auto, 260px 260px, 190px 190px, 320px 320px, auto;
+}
+.parallax-layer[data-theme="firefly"].parallax-far::after{
+    top:32%;
+    background:
+        radial-gradient(78% 36% at 22% 92%, rgba(14,43,48,0.60) 0 47%, transparent 48%),
+        radial-gradient(86% 40% at 76% 90%, rgba(11,34,41,0.66) 0 47%, transparent 48%),
+        linear-gradient(180deg, transparent 52%, rgba(67,96,90,0.10) 65%, rgba(4,16,20,0.30));
+    filter:blur(9px);
+}
+.parallax-layer[data-theme="firefly"].parallax-mid::before{
+    background:
+        radial-gradient(74% 30% at 8% 94%, rgba(5,24,29,0.70) 0 48%, transparent 49%),
+        radial-gradient(88% 34% at 68% 96%, rgba(5,20,27,0.74) 0 48%, transparent 49%),
+        linear-gradient(180deg, transparent 58%, rgba(209,225,178,0.08) 64%, transparent 72%);
+    filter:blur(5px);
+}
+.parallax-layer[data-theme="firefly"].parallax-mid::after{
+    background:
+        radial-gradient(circle at 16% 66%, rgba(218,235,137,0.22) 0 2px, transparent 7px),
+        radial-gradient(circle at 63% 58%, rgba(218,235,137,0.16) 0 2px, transparent 8px),
+        radial-gradient(circle at 84% 72%, rgba(218,235,137,0.20) 0 2px, transparent 7px);
+    filter:blur(1px);
+}
+.parallax-layer[data-theme="firefly"].parallax-near::before{
+    background:
+        radial-gradient(34% 28% at 0% 104%, rgba(0,10,14,0.84) 0 48%, transparent 49%),
+        radial-gradient(42% 32% at 104% 104%, rgba(0,9,13,0.86) 0 50%, transparent 51%),
+        radial-gradient(36% 22% at 55% 108%, rgba(2,16,21,0.72) 0 48%, transparent 49%);
+    filter:blur(2px);
+}
+.parallax-layer[data-theme="firefly"].parallax-near::after{
+    background:linear-gradient(180deg, transparent 66%, rgba(0,8,12,0.58));
+}
+
+.skin-card .skin-thumb{background:rgba(255,255,255,0.18);}
+.skin-card .skin-thumb svg{display:none;}
+.skin-card .skin-thumb::before,.skin-card .skin-thumb::after{
+    content:"";
+    position:absolute;
+    inset:0;
+}
+.skin-card[data-theme="leaf"] .skin-thumb::before{
+    background:
+        radial-gradient(circle at 72% 22%, rgba(255,245,211,0.75) 0 8%, transparent 22%),
+        radial-gradient(90% 45% at 24% 104%, rgba(72,113,91,0.50) 0 46%, transparent 47%),
+        linear-gradient(135deg,#9fc7df,#edf4ee);
+}
+.skin-card[data-theme="leaf"] .skin-thumb::after{
+    background:linear-gradient(180deg, transparent 54%, rgba(31,75,55,0.26));
+}
+.skin-card[data-theme="sakura"] .skin-thumb::before{
+    background:
+        radial-gradient(circle at 24% 20%, rgba(255,246,240,0.72) 0 8%, transparent 22%),
+        radial-gradient(90% 45% at 76% 104%, rgba(201,130,137,0.45) 0 46%, transparent 47%),
+        linear-gradient(135deg,#f2cbd0,#f8eee9);
+}
+.skin-card[data-theme="sakura"] .skin-thumb::after{
+    background:
+        radial-gradient(circle at 62% 34%, rgba(255,236,233,0.6) 0 2px, transparent 3px),
+        radial-gradient(circle at 44% 50%, rgba(220,132,146,0.45) 0 1.5px, transparent 3px),
+        linear-gradient(180deg, transparent 54%, rgba(140,84,86,0.18));
+}
+.skin-card[data-theme="firefly"] .skin-thumb::before{
+    background:
+        radial-gradient(circle at 72% 22%, rgba(255,250,217,0.85) 0 7%, rgba(255,250,217,0.18) 9% 22%, transparent 30%),
+        radial-gradient(circle at 30% 38%, rgba(218,235,137,0.42) 0 2px, transparent 7px),
+        radial-gradient(90% 45% at 32% 106%, rgba(1,16,21,0.82) 0 48%, transparent 49%),
+        linear-gradient(135deg,#07131a,#12313a);
+}
+.skin-card[data-theme="firefly"] .skin-thumb::after{
+    background:linear-gradient(180deg, transparent 54%, rgba(0,8,12,0.42));
+}
